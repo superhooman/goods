@@ -14,9 +14,10 @@ export const getCurrencySymbol = (c: string) => {
 }
 
 export const formatCurrency = (c: string, v: number) => {
+    const value = Intl.NumberFormat().format(v);
     const symbol = getCurrencySymbol(c);
     if (c === 'USD') {
-        return `${symbol}${v}`;
+        return `${symbol}${value}`;
     }
-    return `${v} ${symbol}`;
+    return `${value}${symbol}`;
 }
