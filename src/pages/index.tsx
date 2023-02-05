@@ -40,6 +40,9 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
       currency: true,
       image: true,
       url: true,
+    },
+    orderBy: {
+      dateAdded: "desc"
     }
   });
 
