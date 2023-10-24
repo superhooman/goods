@@ -1,6 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
 import {
-    bigint,
     index,
     int,
     mysqlTableCreator,
@@ -9,7 +8,6 @@ import {
     timestamp,
     varchar,
 } from 'drizzle-orm/mysql-core';
-import { type AdapterAccount } from 'next-auth/adapters';
 
 import { UserRole } from '@src/types/user';
 
@@ -61,7 +59,7 @@ export const accounts = mysqlTable(
     {
         userId: varchar('userId', { length: 255 }).notNull(),
         type: varchar('type', { length: 255 })
-            .$type<AdapterAccount['type']>()
+            .$type<'oauth' | 'email' | 'oidc'>()
             .notNull(),
         provider: varchar('provider', { length: 255 }).notNull(),
         providerAccountId: varchar('providerAccountId', { length: 255 }).notNull(),
