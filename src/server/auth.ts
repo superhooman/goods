@@ -1,8 +1,5 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import {
-    getServerSession,
-    type NextAuthOptions,
-} from 'next-auth';
+import NextAuth, { type NextAuthConfig } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { eq } from 'drizzle-orm';
 
@@ -15,7 +12,7 @@ import { mysqlTable, users } from '@src/server/db/schema';
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthConfig = {
     callbacks: {
         session: async ({ session, user }) => {
             const [dbUser] = await db.select().from(users).where(eq(users.id, user.id));
@@ -51,9 +48,11 @@ export const authOptions: NextAuthOptions = {
     ],
 };
 
+export const { handlers, auth } = NextAuth(authOptions);
+
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = () => auth();

@@ -31,7 +31,7 @@ export const ROUTES = {
     ADMIN: new Route('/admin'),
 
     ADD_ITEM: new Route('/admin/add'),
-    EDIT_ITEM: new Route<{ id: number }>('/admin/edit/:id'),
+    EDIT_ITEM: new Route<{ id: string }>('/admin/edit/:id'),
 
     API: {
         UPLOAD: new Route('/api/upload'),

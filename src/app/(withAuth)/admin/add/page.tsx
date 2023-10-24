@@ -20,3 +20,5 @@ export default async function AddItem() {
         <AdminAddItemPage />
     );
 }
+
+export const runtime = 'edge';

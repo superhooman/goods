@@ -18,9 +18,9 @@ export const mysqlTable = mysqlTableCreator((name) => `goods_${name}`);
 export const items = mysqlTable(
     'item',
     {
-        id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
-        name: varchar('name', { length: 256 }).notNull(),
-        brand: varchar('brand', { length: 256 }).notNull(),
+        id: varchar('id', { length: 255 }).notNull().primaryKey(),
+        name: varchar('name', { length: 255 }).notNull(),
+        brand: varchar('brand', { length: 255 }).notNull(),
         description: text('description').notNull(),
         price: int('price').notNull(),
         image: text('image').notNull(),

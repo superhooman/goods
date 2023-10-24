@@ -9,8 +9,6 @@ import { TRPCReactProvider } from '@src/trpc/react';
 import { DOMAIN_NAME, ROUTES } from '@src/constants/routes';
 import { Toaster } from '@src/components/Toaster';
 
-import { Providers } from './providers';
-
 const inter = Inter({
     subsets: ['latin'],
 });
@@ -40,10 +38,8 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <Providers>
-                    <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
-                    <Toaster />
-                </Providers>
+                <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+                <Toaster />
             </body>
         </html>
     );

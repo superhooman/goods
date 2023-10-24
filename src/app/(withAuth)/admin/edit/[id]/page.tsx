@@ -25,7 +25,7 @@ export default async function Auth({ params: { id } }: Props) {
         return redirect(ROUTES.HOME.get());
     }
 
-    const [item] = await db.select().from(items).where(eq(items.id, Number(id)));
+    const [item] = await db.select().from(items).where(eq(items.id, id));
 
     if (!item) {
         return redirect(ROUTES.ADMIN.get());
@@ -35,3 +35,5 @@ export default async function Auth({ params: { id } }: Props) {
         <AdminEditItemPage item={item} />
     );
 }
+
+export const runtime = 'edge';

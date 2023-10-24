@@ -1,6 +1,5 @@
-import { randomUUID } from 'crypto';
-
 import { NextResponse } from 'next/server';
+import { nanoid } from 'nanoid';
 
 import { s3 } from '@src/server/s3';
 import { FOLDERS } from '@src/constants/s3';
@@ -46,7 +45,7 @@ const handler = async (req: Request) => {
         }, 400);
     }
 
-    const id = `${Date.now()}_${randomUUID()}`;
+    const id = `${Date.now()}_${nanoid(24)}`;
 
     const arrayBuffer = await file.arrayBuffer();
 
@@ -73,3 +72,5 @@ const handler = async (req: Request) => {
 };
 
 export { handler as POST };
+
+export const runtime = 'edge';

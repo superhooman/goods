@@ -20,3 +20,5 @@ export default async function Admin() {
         <AdminHomePage />
     );
 }
+
+export const runtime = 'edge';

@@ -1,6 +1,7 @@
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
 
 import { FOLDERS } from '@src/constants/s3';
 import { itemSchema } from '@src/schemas/item';
@@ -30,42 +31,23 @@ export const adminRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const { user } = ctx.session;
 
-            // const item = await ctx.prisma.item.create({
-            //   data: {
-            //     ...input,
-            //     user: { connect: { id: user.id } },
-            //   },
-            // });
+            const id = nanoid(24);
 
-            const item = await ctx.db.insert(items).values({
+            await ctx.db.insert(items).values({
+                id,
                 ...input,
                 createdById: user.id,
             });
-
-            console.log({ item });
-
-            return item;
         }),
     editItem: protectedProcedure
         .input(z.object({
-            id: z.number(),
+            id: z.string(),
             data: itemSchema,
         }))
-        .mutation(async ({ ctx, input: { id, data } }) => {
-            // const item = await ctx.prisma.item.update({
-            //   where: { id },
-            //   data: {
-            //     ...data,
-            //   },
-            // });
-
-            const item = await ctx.db.update(items).set(data).where(eq(items.id, id));
-
-            return item;
-        }),
+        .mutation(({ ctx, input: { id, data } }) => ctx.db.update(items).set(data).where(eq(items.id, id))),
     removeItem: protectedProcedure
         .input(z.object({
-            id: z.number(),
+            id: z.string(),
         }))
         .mutation(async ({ ctx, input: { id } }) => {
             await ctx.db.delete(items).where(eq(items.id, id));

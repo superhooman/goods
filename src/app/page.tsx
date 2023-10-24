@@ -12,3 +12,5 @@ export default async function Home() {
         </Container>
     );
 }
+
+export const runtime = 'edge';
