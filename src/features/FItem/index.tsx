@@ -17,14 +17,16 @@ export const FItem: React.FC<ItemProps> = ({
     className,
 }) => {
     const href = edit ? ROUTES.EDIT_ITEM.get({ params: { id: item.id } }) : item.url;
+    const imageUrl = ROUTES.S3.get({
+        params: {
+            id: item.image,
+            folder: FOLDERS.ITEMS,
+        }                
+    });
+
     return (
         <Item
-            image={item.image ? ROUTES.S3.get({
-                params: {
-                    id: item.image,
-                    folder: FOLDERS.ITEMS,
-                }                
-            }) : undefined}
+            image={imageUrl}
             name={item.name}
             price={item.price}
             brand={item.brand}
